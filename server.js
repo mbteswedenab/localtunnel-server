@@ -108,7 +108,7 @@ export default function(opt) {
 
             const url = schema + '://' + info.id + '.' + ctx.request.host;
             info.url = url;
-            info.ip = info.id + '.' + ctx.request.host;
+            info.host = info.id + '.' + ctx.request.host;
             ctx.body = info;
             return;
         }
@@ -147,6 +147,7 @@ export default function(opt) {
 
         const url = schema + '://' + info.id + '.' + ctx.request.host;
         info.url = url;
+        info.host = info.id + '.' + ctx.request.host;
         ctx.body = info;
         return;
     });
