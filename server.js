@@ -1,5 +1,6 @@
 import log from 'book';
 import Koa from 'koa';
+import 
 import tldjs from 'tldjs';
 import Debug from 'debug';
 import http from 'http';
@@ -108,7 +109,7 @@ export default function(opt) {
 
             const url = schema + '://' + info.id + '.' + ctx.request.host;
             info.url = url;
-            info.host = info.id + '.' + ctx.request.host;
+            info.ip = `${info.id + '.' + ctx.request.host}`.split(':').shift();
             ctx.body = info;
             return;
         }
@@ -147,7 +148,7 @@ export default function(opt) {
 
         const url = schema + '://' + info.id + '.' + ctx.request.host;
         info.url = url;
-        info.host = info.id + '.' + ctx.request.host;
+        info.ip = `${info.id + '.' + ctx.request.host}`.split(':').shift();
         ctx.body = info;
         return;
     });
