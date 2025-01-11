@@ -169,8 +169,10 @@ export default function(opt) {
             return;
         }
 
+        console.log(`looking for client id = ${clientId}`);
         const client = manager.getClient(clientId);
         if (!client) {
+            console.error('client was not found');
             res.statusCode = 404;
             res.end('404');
             return;
