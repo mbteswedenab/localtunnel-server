@@ -1,6 +1,5 @@
 import log from 'book';
 import Koa from 'koa';
-import 
 import tldjs from 'tldjs';
 import Debug from 'debug';
 import http from 'http';
