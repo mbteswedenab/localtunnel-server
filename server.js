@@ -5,6 +5,7 @@ import Debug from 'debug';
 import http from 'http';
 import { hri } from 'human-readable-ids';
 import Router from 'koa-router';
+import axios from 'axios';
 
 import ClientManager from './lib/ClientManager';
 
@@ -50,6 +51,42 @@ export default function(opt) {
         };
     });
 
+    // allow only DMA team members to connect
+    app.use(async (ctx, next) => {
+        const token = ctx.request.headers['x-auth-as'];
+        if (!token) {
+            console.error('auth token was not provided!');
+            ctx.throw(403);
+            return;
+        }
+        
+        try {
+            const response = await axios.get(`https://panel.dialmyapp.com/api/v2/users/me`, {
+                headers: {
+                    'x-auth-as': token,
+                }
+            });
+
+            if (response.status !== 200) {
+                console.error('bad token provided');
+                ctx.throw(403);
+                return;
+            } else {
+                const user = response.data;
+                if (!user.isDmaMember) {
+                    console.error(`user ${user.email} is not dma member!`);
+                    ctx.throw(403);
+                    return;
+                }
+                console.log(`user ${user.email} is ok`);
+                next();
+            }
+        } catch(err) {
+            console.error('auth request error', err);
+            ctx.throw(500);
+            return;
+        }        
+    });
     app.use(router.routes());
     app.use(router.allowedMethods());
 
