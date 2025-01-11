@@ -79,7 +79,7 @@ export default function(opt) {
                     return;
                 }
                 console.log(`user ${user.email} is ok`);
-                next();
+                await next();
             }
         } catch(err) {
             console.error('auth request error', err);
