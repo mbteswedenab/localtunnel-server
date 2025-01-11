@@ -19,7 +19,7 @@ export default function(opt) {
     const landingPage = opt.landing || 'https://localtunnel.github.io/www/';
 
     function GetClientIdFromHostname(hostname) {
-        return myTldjs.getSubdomain(hostname);
+        return myTldjs.getSubdomain(hostname).split('.').shift();
     }
 
     const manager = new ClientManager(opt);
