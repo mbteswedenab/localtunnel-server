@@ -19,7 +19,7 @@ export default function(opt) {
     const landingPage = opt.landing || 'https://localtunnel.github.io/www/';
 
     function GetClientIdFromHostname(hostname) {
-        return myTldjs.getSubdomain(hostname).split('.').shift();
+        return myTldjs.getSubdomain(hostname)?.split('.').shift();
     }
 
     const manager = new ClientManager(opt);
@@ -159,6 +159,8 @@ export default function(opt) {
     server.on('request', (req, res) => {
         // without a hostname, we won't know who the request is for
         const hostname = req.headers.host;
+        debug(`on request: ${hostname}`);
+
         if (!hostname) {
             res.statusCode = 400;
             res.end('Host header is required');
@@ -185,6 +187,7 @@ export default function(opt) {
 
     server.on('upgrade', (req, socket, head) => {
         const hostname = req.headers.host;
+        debug(`on upgrade: ${hostname}`);
         if (!hostname) {
             socket.destroy();
             return;
