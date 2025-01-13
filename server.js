@@ -7,7 +7,7 @@ import { hri } from 'human-readable-ids';
 import Router from 'koa-router';
 import axios from 'axios';
 
-import ClientManager from './lib/ClientManager';
+import ClientManager from './lib/ClientManager.js';
 
 const debug = Debug('localtunnel:server');
 
