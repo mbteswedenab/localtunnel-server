@@ -154,6 +154,8 @@ export default function(opt) {
     });
 
     const server = http.createServer();
+    console.log('server timeout was: ' + server.timeout);
+    server.setTimeout(0);
 
     const appCallback = app.callback();
 
